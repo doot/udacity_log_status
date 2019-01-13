@@ -11,11 +11,40 @@ This script will output the answer to three questions about the news database.  
 
 * Python 3
 * pyscopg2 module
+* PostgreSQL database named news
+* Sample data loaded into news database
+
+## Setup
+
+Create new database news to load test data into
+```
+echo 'create database news;' | psql
+```
+
+As an alternative to the above you can use a vagrant environment that has PostgreSQL 
+already setup with the news database. This assumes you have both Vagrant and VirtualBox 
+installed already
+```
+git clone https://github.com/udacity/fullstack-nanodegree-vm
+cd fullstack-nanodegree-vm/vagrant
+vagrant up && vagrant ssh
+```
+
+# Load test data
+```
+wget https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
+unzip newsdata.zip
+psql -d news -f newsdata.sql
+```
+
+# Install psycopg2 library to allow python to work with PostgreSQL database
+```
+pip3 install psycopg2
+```
 
 ## Usage
 
 ```
-pip3 install psycopg2
 ./log_analysis.py
 ```
 
