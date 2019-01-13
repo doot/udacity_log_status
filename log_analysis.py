@@ -71,9 +71,9 @@ class LogAnalysis:
         c = self.db.cursor()
         c.execute("""
             select
-                total.date,
+                to_char(total.date, 'Mon DD, YYYY'),
                 (
-                    100 * (error.errorCount::float / total.totalCount::float)
+                    100.0 * error.errorCount / total.totalCount
                 ) as "errorPercent",
                 total.totalCount,
                 error.errorCount
@@ -100,7 +100,7 @@ class LogAnalysis:
         rows = c.fetchall()
         print("Days where more than 1% of requests lead to errors:")
         for row in rows:
-            print("\t{:%B %d, %Y} - {:.3}%".format(row[0], row[1]))
+            print("\t{} - {:.3}%".format(row[0], row[1]))
         print()
 
     def __del__(self):
